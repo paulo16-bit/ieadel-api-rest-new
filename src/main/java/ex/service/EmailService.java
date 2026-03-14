@@ -3,6 +3,7 @@ package ex.service;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -13,8 +14,11 @@ public class EmailService {
     @Autowired
     private JavaMailSender mailSender;
 
+    @Value("${app.base-url}")
+    private String baseUrl;
+
     public void enviarEmailVerificacao(String para, String token) {
-        String link = "http://localhost:8080/auth/verify?token=" + token;
+        String link = baseUrl + "/auth/verify?token=" + token;
         String htmlContent = "<div style='font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;'>" +
                 "<h2 style='color: #2c3e50; text-align: center;'>Verificação de E-mail</h2>" +
                 "<p>Olá,</p>" +
@@ -26,7 +30,7 @@ public class EmailService {
                 "<p style='word-break: break-all; color: #3498db;'>" + link + "</p>" +
                 "<p>Este link é válido por 24 horas.</p>" +
                 "<br>" +
-                "<p>Atenciosamente,<br>Equipe IADEL</p>" +
+                "<p>Atenciosamente,<br>Equipe IEADEL</p>" +
                 "</div>";
 
         try {
